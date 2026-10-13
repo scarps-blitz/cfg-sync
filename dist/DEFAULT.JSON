@@ -12,7 +12,7 @@
   "DomesticDNSIP": "77.88.8.8",
   "Geoipurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip@202610131029/release/geoip.dat",
   "Geositeurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite@202610120948/release/geosite.dat",
-  "LastUpdated": "1791920484",
+  "LastUpdated": "1791924173",
   "DnsHosts": {
     "lkfl2.nalog.ru": "213.24.64.175",
     "lknpd.nalog.ru": "213.24.64.181",
@@ -27,7 +27,7 @@
     "proactivebackend-pa.googleapis.com": "132.243.112.221",
     "robinfrontend-pa.googleapis.com": "132.243.112.221",
     "aisandbox-pa.googleapis.com": "157.22.177.90",
-    "aitestkitchen.withgoogle.com": "157.22.177.90",
+    "aitestkitchen.withgoogle.com": "132.243.112.221",
     "stitch.withgoogle.com": "132.243.112.221"
   },
   "RouteOrder": "block-proxy-direct",
