@@ -1,0 +1,40 @@
+{
+  "base_profile_url": "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/refs/heads/main/HAPP/DEFAULT.JSON",
+  "output_name": "DEFAULT",
+  "own_proxy_ips": [],
+  "check_timeout_seconds": 6,
+  "check_attempts": 2,
+  "sources": [
+    {
+      "name": "malw-hosts",
+      "type": "hosts",
+      "url": "https://raw.githubusercontent.com/ImMALWARE/dns.malw.link/master/hosts"
+    },
+    {
+      "name": "malw-doh",
+      "type": "doh",
+      "url": "https://dns.malw.link/dns-query"
+    },
+    {
+      "name": "comss-doh",
+      "type": "doh",
+      "url": "https://dns.comss.one/dns-query"
+    }
+  ],
+  "domains": [
+    "gemini.google.com",
+    "aistudio.google.com",
+    "generativelanguage.googleapis.com",
+    "notebooklm.google.com",
+    "jules.google.com",
+    "labs.google",
+    "alkalimakersuite-pa.clients6.google.com",
+    "webchannel-alkalimakersuite-pa.clients6.google.com",
+    "proactivebackend-pa.googleapis.com",
+    "robinfrontend-pa.googleapis.com",
+    "assistant-s3-pa.googleapis.com",
+    "aisandbox-pa.googleapis.com",
+    "aitestkitchen.withgoogle.com",
+    "stitch.withgoogle.com"
+  ]
+}
