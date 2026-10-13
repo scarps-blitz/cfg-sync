@@ -24,6 +24,7 @@ DIST = ROOT / "dist"
 GOOGLE_RANGES_URL = "https://www.gstatic.com/ipranges/goog.json"
 CONTROL_DOH_URL = "https://1.1.1.1/dns-query"
 USER_AGENT = "cfg-sync/1.0"
+BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
 
 
 def log(message):
@@ -170,28 +171,42 @@ def collect_candidates(config):
 
 # --- Проверка прокси ---
 
-def proxy_alive(ip, domain, timeout, attempts):
-    """TLS-рукопожатие с SNI домена: прокси жив, если отдал валидный сертификат сайта."""
+def proxy_check(ip, domain, timeout, attempts):
+    """Запрос к домену через прокси: "ok", "flagged" (Google отдаёт капчу) или "dead"."""
+    request = (
+        f"GET / HTTP/1.1\r\nHost: {domain}\r\nUser-Agent: {BROWSER_UA}\r\n"
+        "Accept: */*\r\nConnection: close\r\n\r\n"
+    ).encode()
     for _ in range(attempts):
         try:
             with socket.create_connection((ip, 443), timeout=timeout) as raw:
-                with TLS_CONTEXT.wrap_socket(raw, server_hostname=domain):
-                    return True
+                with TLS_CONTEXT.wrap_socket(raw, server_hostname=domain) as tls:
+                    tls.sendall(request)
+                    head = tls.recv(4096).decode("latin-1").lower()
         except (OSError, ssl.SSLError):
             continue
-    return False
+        if not head.startswith("http/"):
+            continue
+        if head.split(" ", 2)[1] == "429" or "/sorry/" in head:
+            return "flagged"
+        return "ok"
+    return "dead"
 
 
 def pick_proxies(candidates, timeout, attempts):
-    """Возвращает {домен: (ip, источник)} — первый живой кандидат по приоритету."""
+    """Возвращает {домен: (ip, источник)} — первый рабочий кандидат по приоритету."""
     pairs = sorted({(ip, domain) for domain, items in candidates.items() for ip, _ in items})
     with ThreadPoolExecutor(max_workers=16) as pool:
-        results = pool.map(lambda pair: proxy_alive(pair[0], pair[1], timeout, attempts), pairs)
-        alive = dict(zip(pairs, results))
+        results = pool.map(lambda pair: proxy_check(pair[0], pair[1], timeout, attempts), pairs)
+        status = dict(zip(pairs, results))
+    # Адрес, с которого Google хоть раз отдал капчу, не берём ни для одного домена
+    flagged = {ip for (ip, _), result in status.items() if result == "flagged"}
+    for ip in sorted(flagged):
+        log(f"! {ip} отдаёт капчу Google — пропущен")
     chosen = {}
     for domain, items in candidates.items():
         for ip, source in items:
-            if alive[(ip, domain)]:
+            if ip not in flagged and status[(ip, domain)] == "ok":
                 chosen[domain] = (ip, source)
                 break
     return chosen
