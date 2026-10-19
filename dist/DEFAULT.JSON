@@ -12,10 +12,23 @@
   "DomesticDNSIP": "77.88.8.8",
   "Geoipurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip@202610190846/release/geoip.dat",
   "Geositeurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite@202610120948/release/geosite.dat",
-  "LastUpdated": "1792431571",
+  "LastUpdated": "1792438885",
   "DnsHosts": {
     "lkfl2.nalog.ru": "213.24.64.175",
-    "lknpd.nalog.ru": "213.24.64.181"
+    "lknpd.nalog.ru": "213.24.64.181",
+    "gemini.google.com": "157.22.181.209",
+    "aistudio.google.com": "157.22.181.209",
+    "generativelanguage.googleapis.com": "157.22.181.209",
+    "notebooklm.google.com": "157.22.181.209",
+    "jules.google.com": "157.22.181.209",
+    "labs.google": "157.22.181.209",
+    "alkalimakersuite-pa.clients6.google.com": "157.22.181.209",
+    "webchannel-alkalimakersuite-pa.clients6.google.com": "157.22.181.209",
+    "proactivebackend-pa.googleapis.com": "157.22.181.209",
+    "robinfrontend-pa.googleapis.com": "157.22.181.209",
+    "aisandbox-pa.googleapis.com": "157.22.181.209",
+    "aitestkitchen.withgoogle.com": "157.22.181.209",
+    "stitch.withgoogle.com": "157.22.181.209"
   },
   "RouteOrder": "block-proxy-direct",
   "DirectSites": [
@@ -30,7 +43,20 @@
     "geosite:steam",
     "geosite:twitch",
     "geosite:pinterest",
-    "geosite:faceit"
+    "geosite:faceit",
+    "full:gemini.google.com",
+    "full:aistudio.google.com",
+    "full:generativelanguage.googleapis.com",
+    "full:notebooklm.google.com",
+    "full:jules.google.com",
+    "full:labs.google",
+    "full:alkalimakersuite-pa.clients6.google.com",
+    "full:webchannel-alkalimakersuite-pa.clients6.google.com",
+    "full:proactivebackend-pa.googleapis.com",
+    "full:robinfrontend-pa.googleapis.com",
+    "full:aisandbox-pa.googleapis.com",
+    "full:aitestkitchen.withgoogle.com",
+    "full:stitch.withgoogle.com"
   ],
   "DirectIp": [
     "geoip:private",
